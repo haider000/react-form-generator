@@ -157,6 +157,7 @@ const FormGenerator = ({ onAddField }) => {
               <input
                 type="checkbox"
                 value={validations.required}
+                checked={validations.required}
                 onChange={(e) =>
                   handleChangeValidation("required", e.target.checked)
                 }

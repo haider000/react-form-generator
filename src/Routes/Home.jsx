@@ -58,6 +58,8 @@ const Home = () => {
       return;
     }
 
+    saveToLocalStorage(formData);
+
     const url = `${window.location.href}form?formId=${formData.formId}`;
 
     Object.assign(document.createElement("a"), {
