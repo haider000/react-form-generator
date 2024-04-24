@@ -122,7 +122,7 @@ const Home = () => {
             </div>
 
             <FormPreview
-              formData={formData.data}
+              formData={formData}
               showRemoveButton={true}
               onRemoveField={handleRemoveField}
             />

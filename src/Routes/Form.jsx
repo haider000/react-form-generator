@@ -21,7 +21,7 @@ const Form = () => {
   return (
     <div className="flex w-full justify-center items-center mt-6 p-8">
       <div className="flex w-[50%]">
-        <FormPreview formData={formData.data} />
+        <FormPreview formData={formData} />
       </div>
     </div>
   );

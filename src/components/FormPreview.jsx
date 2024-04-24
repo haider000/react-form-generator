@@ -4,14 +4,34 @@ import FormField from "./FormField";
 const FormPreview = ({ formData, showRemoveButton = false, onRemoveField }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
-    const data = new FormData(e.currentTarget);
-    console.log("Form Data:", Object.fromEntries(data));
-    alert(`Form Data: ${JSON.stringify(Object.fromEntries(data))}`);
+
+    const { formId, data } = formData;
+
+    const dataFromFormApi = new FormData(e.currentTarget);
+
+    const finalFormData = data.map((field) => {
+      const { label, type, ...rest } = field;
+      return {
+        label,
+        type,
+        value:
+          type === "checkbox"
+            ? dataFromFormApi.get(label) === "on"
+            : dataFromFormApi.get(label),
+        ...rest,
+      };
+    });
+
+    console.log(
+      "Form Data:",
+      JSON.stringify({ formId, finalFormData }, null, 2)
+    );
+    alert(`Form Data: ${JSON.stringify({ formId, finalFormData }, null, 2)}`);
   };
 
   return (
     <form onSubmit={handleSubmit} className="w-full">
-      {formData.map((field, index) => (
+      {formData.data.map((field, index) => (
         <div key={index} className="flex gap-2 items-end w-full pb-6">
           <FormField field={field} />
           {showRemoveButton && (
@@ -25,7 +45,7 @@ const FormPreview = ({ formData, showRemoveButton = false, onRemoveField }) => {
           )}
         </div>
       ))}
-      {formData.length > 0 && (
+      {formData.data.length > 0 && (
         <button
           type="submit"
           className="bg-green-500 flex w-full justify-center font-bold text-white px-4 py-2 rounded-md hover:bg-green-600"
